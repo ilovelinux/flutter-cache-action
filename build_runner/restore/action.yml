@@ -30,6 +30,7 @@ runs:
           **/*.mocks.dart
           **/*.config.dart
         key: build-runner-${{ hashFiles('**/pubspec.lock', '**/*.dart') }}
+        restore-keys: none--
         fail-on-cache-miss: ${{ inputs.fail-on-cache-miss }}
         enableCrossOsArchive: ${{ inputs.enableCrossOsArchive }}
         lookup-only: ${{ inputs.lookup-only }}
