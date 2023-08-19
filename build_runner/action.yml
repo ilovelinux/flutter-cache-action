@@ -33,7 +33,7 @@ runs:
 
     - if: steps.restore.outputs.cache-hit == 'false'
       shell: bash
-      run: dart run build_runner build --delete-conflictiong-outputs
+      run: dart run build_runner build --delete-conflicting-outputs
 
     - if: steps.restore.outputs.cache-hit == 'false'
       shell: bash
