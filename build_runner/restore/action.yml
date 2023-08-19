@@ -16,12 +16,12 @@ inputs:
 outputs:
   cache-hit:
     description: "A boolean value to indicate an exact match was found for the key."
-    value: ${{ steps.generator-cache.outputs.cache-hit }}
+    value: ${{ steps.fetch-generated-code.outputs.cache-hit }}
 runs:
   using: "composite"
   steps:
     - uses: actions/cache/restore@v3
-      id: generator-cache
+      id: fetch-generated-code
       with:
         path: |
           **/.dart_tool
@@ -35,5 +35,5 @@ runs:
         lookup-only: ${{ inputs.lookup-only }}
 
     - run: |
-        echo "Cache hit: ${{ steps.generator-cache.outputs.cache-hit }}"
+        echo "Cache hit: ${{ steps.fetch-generated-code.outputs.cache-hit }}"
       shell: bash
