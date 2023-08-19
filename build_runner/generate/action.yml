@@ -27,6 +27,9 @@ runs:
         enableCrossOsArchive: ${{ inputs.enableCrossOsArchive }}
         lookup-only: ${{ inputs.lookup-only }}
 
+    - run: echo "Cache hit: ${{ steps.restore.outputs.cache-hit }}"
+      shell: bash
+
     - if: ${{ steps.restore.outputs.cache-hit == 'true' }}
       shell: bash
       run: echo "Cache hit, skipping code generation and cache update"
