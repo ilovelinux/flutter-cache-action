@@ -20,16 +20,16 @@ outputs:
 runs:
   using: "composite"
   steps:
-      - uses: actions/cache/restore@v3
-        id: generator-cache
-        with:
-          path: |
-            **/.dart_tool
-            **/*.g.dart
-            **/*.freezed.dart
-            **/*.mocks.dart
-            **/*.config.dart
-          key: build-runner-${{ hashFiles('**/pubspec.lock', '**/*.dart') }}
-          fail-on-cache-miss: ${{ inputs.fail-on-cache-miss }}
-          enableCrossOsArchive: ${{ inputs.enableCrossOsArchive }}
-          lookup-only: ${{ inputs.lookup-only }}
+    - uses: actions/cache/restore@v3
+      id: generator-cache
+      with:
+        path: |
+          **/.dart_tool
+          **/*.g.dart
+          **/*.freezed.dart
+          **/*.mocks.dart
+          **/*.config.dart
+        key: build-runner-${{ hashFiles('**/pubspec.lock', '**/*.dart') }}
+        fail-on-cache-miss: ${{ inputs.fail-on-cache-miss }}
+        enableCrossOsArchive: ${{ inputs.enableCrossOsArchive }}
+        lookup-only: ${{ inputs.lookup-only }}

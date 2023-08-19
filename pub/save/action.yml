@@ -8,14 +8,14 @@ inputs:
 runs:
   using: "composite"
   steps:
-      - uses: actions/cache/save@v3
-        with:
-          path: |
-            ${{ env.FLUTTER_HOME }}/.pub-cache
-            **/.packages
-            **/.flutter-plugins
-            **/.flutter-plugin-dependencies
-            **/.dart_tool/package_config.json
-            **/.dart_tool/flutter_gen/pubspec.yaml
-          key: build-pubspec-${{ hashFiles('**/pubspec.lock') }}
-          enableCrossOsArchive: ${{ inputs.enableCrossOsArchive }}
+    - uses: actions/cache/save@v3
+      with:
+        path: |
+          ${{ env.FLUTTER_HOME }}/.pub-cache
+          **/.packages
+          **/.flutter-plugins
+          **/.flutter-plugin-dependencies
+          **/.dart_tool/package_config.json
+          **/.dart_tool/flutter_gen/pubspec.yaml
+        key: build-pubspec-${{ hashFiles('**/pubspec.lock') }}
+        enableCrossOsArchive: ${{ inputs.enableCrossOsArchive }}

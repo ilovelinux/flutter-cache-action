@@ -20,17 +20,17 @@ outputs:
 runs:
   using: "composite"
   steps:
-      - uses: actions/cache/restore@v3
-        id: pub-cache
-        with:
-          path: |
-            ${{ env.FLUTTER_HOME }}/.pub-cache
-            **/.packages
-            **/.flutter-plugins
-            **/.flutter-plugin-dependencies
-            **/.dart_tool/package_config.json
-            **/.dart_tool/flutter_gen/pubspec.yaml
-          key: build-pubspec-${{ hashFiles('**/pubspec.lock') }}
-          fail-on-cache-miss: ${{ inputs.fail-on-cache-miss }}
-          enableCrossOsArchive: ${{ inputs.enableCrossOsArchive }}
-          lookup-only: ${{ inputs.lookup-only }}
+    - uses: actions/cache/restore@v3
+      id: pub-cache
+      with:
+        path: |
+          ${{ env.FLUTTER_HOME }}/.pub-cache
+          **/.packages
+          **/.flutter-plugins
+          **/.flutter-plugin-dependencies
+          **/.dart_tool/package_config.json
+          **/.dart_tool/flutter_gen/pubspec.yaml
+        key: build-pubspec-${{ hashFiles('**/pubspec.lock') }}
+        fail-on-cache-miss: ${{ inputs.fail-on-cache-miss }}
+        enableCrossOsArchive: ${{ inputs.enableCrossOsArchive }}
+        lookup-only: ${{ inputs.lookup-only }}
