@@ -31,7 +31,6 @@ runs:
             **/.dart_tool/package_config.json
             **/.dart_tool/flutter_gen/pubspec.yaml
           key: build-pubspec-${{ hashFiles('**/pubspec.lock') }}
-          restore-keys: build-pubspec-
           fail-on-cache-miss: ${{ inputs.fail-on-cache-miss }}
           enableCrossOsArchive: ${{ inputs.enableCrossOsArchive }}
           lookup-only: ${{ inputs.lookup-only }}
