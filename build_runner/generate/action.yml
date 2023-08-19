@@ -48,7 +48,7 @@ runs:
     - if: ${{ steps.restore.outputs.cache-hit != 'true' }}
       uses: ilovelinux/flutter-cache-action/build_runner/save@v1
       with:
-        key: ${{ steps.restore.outputs.cache-primary-key }}
+        key: ${{ steps.restore.outputs.cache-key }}
         enableCrossOsArchive: ${{ inputs.enableCrossOsArchive }}
 
     - if: ${{ steps.restore.outputs.cache-hit != 'true' }}
