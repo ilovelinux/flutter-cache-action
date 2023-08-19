@@ -27,23 +27,23 @@ runs:
         enableCrossOsArchive: ${{ inputs.enableCrossOsArchive }}
         lookup-only: ${{ inputs.lookup-only }}
 
-    - if: steps.restore.outputs.cache-hit != 'false'
+    - if: ${{ steps.restore.outputs.cache-hit == 'true' }}
       shell: bash
       run: echo "Cache hit, skipping pub get and cache update"
 
-    - if: steps.restore.outputs.cache-hit == 'false'
+    - if: ${{ steps.restore.outputs.cache-hit == 'false' }}
       shell: bash
       run: flutter pub get
 
-    - if: steps.restore.outputs.cache-hit == 'false'
+    - if: ${{ steps.restore.outputs.cache-hit == 'false' }}
       shell: bash
       run: echo "Packages updated!"
 
-    - if: steps.restore.outputs.cache-hit == 'false'
+    - if: ${{ steps.restore.outputs.cache-hit == 'false' }}
       uses: ilovelinux/flutter-cache-action/pub/save@v1
       with:
         enableCrossOsArchive: ${{ inputs.enableCrossOsArchive }}
 
-    - if: steps.restore.outputs.cache-hit == 'false'
+    - if: ${{ steps.restore.outputs.cache-hit == 'false' }}
       shell: bash
       run: echo "Packages cache updated!"

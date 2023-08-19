@@ -27,23 +27,23 @@ runs:
         enableCrossOsArchive: ${{ inputs.enableCrossOsArchive }}
         lookup-only: ${{ inputs.lookup-only }}
 
-    - if: steps.restore.outputs.cache-hit != 'false'
+    - if: ${{ steps.restore.outputs.cache-hit == 'true' }}
       shell: bash
       run: echo "Cache hit, skipping code generation and cache update"
 
-    - if: steps.restore.outputs.cache-hit == 'false'
+    - if: ${{ steps.restore.outputs.cache-hit == 'false' }}
       shell: bash
       run: dart run build_runner build --delete-conflicting-outputs
 
-    - if: steps.restore.outputs.cache-hit == 'false'
+    - if: ${{ steps.restore.outputs.cache-hit == 'false' }}
       shell: bash
       run: echo "Code generated!"
 
-    - if: steps.restore.outputs.cache-hit == 'false'
+    - if: ${{ steps.restore.outputs.cache-hit == 'false' }}
       uses: ilovelinux/flutter-cache-action/build_runner/save@v1
       with:
         enableCrossOsArchive: ${{ inputs.enableCrossOsArchive }}
 
-    - if: steps.restore.outputs.cache-hit == 'false'
+    - if: ${{ steps.restore.outputs.cache-hit == 'false' }}
       shell: bash
       run: echo "Code generation cache updated!"
