@@ -23,12 +23,12 @@ runs:
     - uses: ilovelinux/flutter-cache-action/pub/get@v1
       id: pub-cache
       with:
-        fail-on-cache-miss: ${{ github.event.inputs.fail-on-cache-miss }}
-        enableCrossOsArchive: ${{ github.event.inputs.enableCrossOsArchive }}
-        lookup-only: ${{ github.event.inputs.lookup-only }}
+        fail-on-cache-miss: ${{ inputs.fail-on-cache-miss }}
+        enableCrossOsArchive: ${{ inputs.enableCrossOsArchive }}
+        lookup-only: ${{ inputs.lookup-only }}
     - uses: ilovelinux/flutter-cache-action/build_runner/generate@v1
       id: generator-cache
       with:
-        fail-on-cache-miss: ${{ github.event.inputs.fail-on-cache-miss }}
-        enableCrossOsArchive: ${{ github.event.inputs.enableCrossOsArchive }}
-        lookup-only: ${{ github.event.inputs.lookup-only }}
+        fail-on-cache-miss: ${{ inputs.fail-on-cache-miss }}
+        enableCrossOsArchive: ${{ inputs.enableCrossOsArchive }}
+        lookup-only: ${{ inputs.lookup-only }}
