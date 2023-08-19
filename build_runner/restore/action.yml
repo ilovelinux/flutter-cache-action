@@ -1,6 +1,10 @@
 name: 'Restore package dependencies from cache'
 description: 'Restore package dependencies from cache'
 inputs:
+  key:
+    description: 'An exact string match for the key. The key is used to create a unique identifier for the cache entry.'
+    required: false
+    default: build-runner-${{ hashFiles('**/pubspec.lock', '**/*.dart') }}
   fail-on-cache-miss:
     description: 'Fail the workflow if cache entry is not found'
     default: 'false'
@@ -14,6 +18,9 @@ inputs:
     default: 'false'
     required: false
 outputs:
+  cache-key:
+    description: "The cache key that was used for restoring the cache."
+    value: ${{ steps.fetch-generated-code.outputs.cache-primary-key }}
   cache-hit:
     description: "A boolean value to indicate an exact match was found for the key."
     value: ${{ steps.fetch-generated-code.outputs.cache-hit }}
@@ -29,8 +36,7 @@ runs:
           **/*.freezed.dart
           **/*.mocks.dart
           **/*.config.dart
-        key: build-runner-${{ hashFiles('**/pubspec.lock', '**/*.dart') }}
-        restore-keys: build-runner-${{ hashFiles('**/pubspec.lock', '**/*.dart') }}
+        key: ${{ inputs.key }}
         fail-on-cache-miss: ${{ inputs.fail-on-cache-miss }}
         enableCrossOsArchive: ${{ inputs.enableCrossOsArchive }}
         lookup-only: ${{ inputs.lookup-only }}
