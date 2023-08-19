@@ -33,3 +33,7 @@ runs:
         fail-on-cache-miss: ${{ inputs.fail-on-cache-miss }}
         enableCrossOsArchive: ${{ inputs.enableCrossOsArchive }}
         lookup-only: ${{ inputs.lookup-only }}
+
+    - run: |
+        echo "Cache hit: ${{ steps.generator-cache.outputs.cache-hit }}"
+      shell: bash
