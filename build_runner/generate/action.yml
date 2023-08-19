@@ -29,6 +29,8 @@ runs:
 
     - run: |
         echo "Cache hit: ${{ steps.restore.outputs.cache-hit }}"
+        echo "Cache primary key: ${{ steps.restore.outputs.cache-primary-key }}"
+        echo "Cache restore keys: ${{ steps.restore.outputs.cache-restore-keys }}"
       shell: bash
 
     - if: ${{ steps.restore.outputs.cache-hit == 'true' }}
