@@ -1,0 +1,37 @@
+name: 'Restore package dependencies from cache'
+description: 'Restore package dependencies from cache'
+inputs:
+  fail-on-cache-miss:
+    description: 'Fail the workflow if cache entry is not found'
+    default: 'false'
+    required: false
+  enableCrossOsArchive:
+    description: 'An optional boolean when enabled, allows windows runners to restore caches that were saved on other platforms'
+    default: 'false'
+    required: false
+  lookup-only:
+    description: 'Check if a cache entry exists for the given input(s) (key, restore-keys) without downloading the cache'
+    default: 'false'
+    required: false
+outputs:
+  cache-hit:
+    description: "A boolean value to indicate an exact match was found for the key."
+    value: ${{ steps.random-number-generator.outputs.random-number }}
+runs:
+  using: "composite"
+  steps:
+      - uses: actions/cache/restore@v3
+        id: pub-cache
+        with:
+          path: |
+            ${{ env.FLUTTER_HOME }}/.pub-cache
+            **/.packages
+            **/.flutter-plugins
+            **/.flutter-plugin-dependencies
+            **/.dart_tool/package_config.json
+            **/.dart_tool/flutter_gen/pubspec.yaml
+          key: build-pubspec-${{ hashFiles('**/pubspec.lock') }}
+          restore-keys: build-pubspec-
+          fail-on-cache-miss: ${{ inputs.fail-on-cache-miss }}
+          enableCrossOsArchive: ${{ inputs.enableCrossOsArchive }}
+          lookup-only: ${{ inputs.lookup-only }}

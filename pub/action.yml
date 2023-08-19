@@ -1,0 +1,45 @@
+name: 'Flutter Package Caching Action'
+description: 'Cache package dependencies'
+inputs:
+  fail-on-cache-miss:
+    description: 'Fail the workflow if cache entry is not found'
+    default: 'false'
+    required: false
+  enableCrossOsArchive:
+    description: 'An optional boolean when enabled, allows windows runners to restore caches that were saved on other platforms'
+    default: 'false'
+    required: false
+  lookup-only:
+    description: 'Check if a cache entry exists for the given input(s) (key, restore-keys) without downloading the cache'
+    default: 'false'
+    required: false
+outputs:
+  cache-hit:
+    description: "A boolean value to indicate an exact match was found for the key."
+    value: ${{ steps.random-number-generator.outputs.random-number }}
+runs:
+  using: "composite"
+  steps:
+    - uses: ilovelinux/flutter-cache-action/pub/restore@v1
+      id: restore
+      with:
+        fail-on-cache-miss: ${{ inputs.fail-on-cache-miss }}
+        enableCrossOsArchive: ${{ inputs.enableCrossOsArchive }}
+        lookup-only: ${{ inputs.lookup-only }}
+
+    - if: steps.restore.outputs.cache-hit != 'false'
+      run: echo "Cache hit, skipping pub get and cache update"
+
+    - if: steps.restore.outputs.cache-hit == 'false'
+      run: flutter pub get
+
+    - if: steps.restore.outputs.cache-hit == 'false'
+      run: echo "Packages updated!"
+
+    - if: steps.restore.outputs.cache-hit == 'false'
+      uses: ilovelinux/flutter-cache-action/pub/save@v1
+      with:
+        enableCrossOsArchive: ${{ inputs.enableCrossOsArchive }}
+
+    - if: steps.restore.outputs.cache-hit == 'false'
+      run: echo "Packages cache updated!"
