@@ -33,11 +33,6 @@ runs:
       with:
         path: |
           ${{ inputs.pub-cache-path || env.PUB_CACHE }}
-          **/.packages
-          **/.flutter-plugins
-          **/.flutter-plugin-dependencies
-          **/.dart_tool/package_config.json
-          **/.dart_tool/flutter_gen/pubspec.yaml
         key: ${{ inputs.key }}
         fail-on-cache-miss: ${{ inputs.fail-on-cache-miss }}
         enableCrossOsArchive: ${{ inputs.enableCrossOsArchive }}

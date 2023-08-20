@@ -42,14 +42,11 @@ runs:
         lookup-only: ${{ inputs.lookup-only }}
 
     - if: ${{ steps.restore.outputs.cache-hit == 'true' }}
-      shell: bash
       run: echo "Cache hit, skipping pub get and cache update"
-
-    - if: ${{ steps.restore.outputs.cache-hit != 'true' }}
       shell: bash
-      run: |
-        flutter pub get ${{ inputs.pub-flags }}
-        echo "Packages updated! Updating cache..."
+
+    - run: flutter pub get ${{ inputs.pub-flags }}
+      shell: bash
 
     - if: ${{ steps.restore.outputs.cache-hit != 'true' }}
       uses: ilovelinux/flutter-cache-action/pub/save@v1
