@@ -15,7 +15,6 @@ runs:
     - uses: actions/cache/save@v3
       with:
         path: |
-          **/.dart_tool
           **/*.g.dart
           **/*.freezed.dart
           **/*.mocks.dart
