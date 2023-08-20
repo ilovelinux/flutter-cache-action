@@ -40,6 +40,6 @@ runs:
         enableCrossOsArchive: ${{ inputs.enableCrossOsArchive }}
         lookup-only: ${{ inputs.lookup-only }}
 
-    - run: mv .pub-cache ${{ inputs.pub-cache-path }}
+    - run: mv .pub-cache ${{ inputs.pub-cache-path || env.PUB_CACHE }}
       if: ${{ steps.pub-cache.outputs.cache-hit == 'true' }}
       shell: bash
