@@ -4,7 +4,7 @@ inputs:
   key:
     description: 'An exact string match for the key. The key is used to create a unique identifier for the cache entry.'
     required: false
-    default: flutter-pub-cache-${{ hashFiles('**/pubspec.lock', '**/*.dart') }}
+    default: flutter-pub-cache-${{ hashFiles('**/pubspec.lock') }}
   pub-cache-path:
     description: 'The path to the pub-cache directory'
     default: ''
