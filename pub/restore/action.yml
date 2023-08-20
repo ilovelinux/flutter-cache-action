@@ -41,5 +41,5 @@ runs:
         lookup-only: ${{ inputs.lookup-only }}
 
     - run: mv .pub-cache "${{ inputs.pub-cache-path || env.PUB_CACHE }}"
-      if: ${{ steps.pub-cache.outputs.cache-hit == 'true' }}
+      if: ${{ steps.pub-cache.outputs.cache-hit == 'true' && inputs.lookup-only != 'true' }}
       shell: bash
