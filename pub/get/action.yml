@@ -1,6 +1,18 @@
 name: 'Flutter Package Caching Action'
 description: 'Cache package dependencies'
 inputs:
+  key:
+    description: 'An exact string match for the key. The key is used to create a unique identifier for the cache entry.'
+    required: false
+    default: flutter-pub-cache-${{ hashFiles('**/pubspec.lock') }}
+  pub-cache-path:
+    description: 'The path to the pub-cache directory (default: env.PUB_CACHE))'
+    default: ''
+    required: false
+  pub-flags:
+    description: 'Flags to pass to pub get'
+    default: ''
+    required: false
   fail-on-cache-miss:
     description: 'Fail the workflow if cache entry is not found'
     default: 'false'
@@ -14,32 +26,31 @@ inputs:
     default: 'false'
     required: false
 outputs:
+  cache-key:
+    description: "The cache key that was used for restoring the cache."
+    value: ${{ steps.restore.outputs.cache-key }}
   cache-hit:
     description: "A boolean value to indicate an exact match was found for the key."
-    value: ${{ steps.random-number-generator.outputs.random-number }}
+    value: ${{ steps.restore.outputs.cache-hit }}
 runs:
   using: "composite"
   steps:
     - uses: ilovelinux/flutter-cache-action/pub/restore@v1
       id: restore
       with:
+        key: ${{ inputs.key }}
+        pub-cache-path: ${{ inputs.pub-cache-path }}
         fail-on-cache-miss: ${{ inputs.fail-on-cache-miss }}
         enableCrossOsArchive: ${{ inputs.enableCrossOsArchive }}
         lookup-only: ${{ inputs.lookup-only }}
 
-    - if: steps.restore.outputs.cache-hit != 'false'
-      run: echo "Cache hit, skipping pub get and cache update"
+    - name: Run pub get
+      run: flutter pub get ${{ inputs.pub-flags }}
+      shell: bash
 
-    - if: steps.restore.outputs.cache-hit == 'false'
-      run: flutter pub get
-
-    - if: steps.restore.outputs.cache-hit == 'false'
-      run: echo "Packages updated!"
-
-    - if: steps.restore.outputs.cache-hit == 'false'
-      uses: ilovelinux/flutter-cache-action/pub/save@v1
+    - uses: ilovelinux/flutter-cache-action/pub/save@v1
+      if: ${{ steps.restore.outputs.cache-hit != 'true' }}
       with:
+        key: ${{ inputs.key }}
+        pub-cache-path: ${{ inputs.pub-cache-path }}
         enableCrossOsArchive: ${{ inputs.enableCrossOsArchive }}
-
-    - if: steps.restore.outputs.cache-hit == 'false'
-      run: echo "Packages cache updated!"

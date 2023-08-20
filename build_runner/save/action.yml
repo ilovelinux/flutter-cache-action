@@ -1,6 +1,10 @@
 name: 'Flutter Package Caching Action'
 description: 'Cache package dependencies'
 inputs:
+  key:
+    description: 'An optional key to use for restoring and saving the cache'
+    required: false
+    default: build-runner-${{ hashFiles('**/pubspec.lock', '**/*.dart') }}
   enableCrossOsArchive:
     description: 'An optional boolean when enabled, allows windows runners to restore caches that were saved on other platforms'
     default: 'false'
@@ -8,15 +12,12 @@ inputs:
 runs:
   using: "composite"
   steps:
-      - uses: actions/cache/restore@v3
-        id: generator-cache
-        with:
-          path: |
-            **/.dart_tool
-            **/*.g.dart
-            **/*.freezed.dart
-            **/*.mocks.dart
-            **/*.config.dart
-          key: build-runner-${{ hashFiles('**/pubspec.lock') }}-${{ hashFiles('**/*.dart') }}
-          restore-keys: build-runner-
-          enableCrossOsArchive: ${{ inputs.enableCrossOsArchive }}
+    - uses: actions/cache/save@v3
+      with:
+        path: |
+          **/*.g.dart
+          **/*.freezed.dart
+          **/*.mocks.dart
+          **/*.config.dart
+        key: ${{ inputs.key }}
+        enableCrossOsArchive: ${{ inputs.enableCrossOsArchive }}
