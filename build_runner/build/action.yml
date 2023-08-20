@@ -18,6 +18,9 @@ inputs:
     default: 'false'
     required: false
 outputs:
+  cache-key:
+    description: "The cache key that was used for restoring the cache."
+    value: ${{ steps.fetch-generated-code.outputs.cache-primary-key || inputs.key }}
   cache-hit:
     description: "A boolean value to indicate an exact match was found for the key."
     value: ${{ steps.restore.outputs.cache-hit }}
