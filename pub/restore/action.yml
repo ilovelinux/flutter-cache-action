@@ -6,8 +6,8 @@ inputs:
     required: false
     default: flutter-pub-cache-${{ hashFiles('**/pubspec.lock') }}
   pub-cache-path:
-    description: 'The path to the pub-cache directory'
-    default: ${{ env.PUB_CACHE }}/.pub-cache
+    description: 'The path to the pub-cache directory (default: $PUB_CACHE/.pub-cache))'
+    default: ''
     required: false
   fail-on-cache-miss:
     description: 'Fail the workflow if cache entry is not found'
@@ -38,7 +38,7 @@ runs:
           **/.flutter-plugin-dependencies
           **/.dart_tool/package_config.json
           **/.dart_tool/flutter_gen/pubspec.yaml
-        key:  ${{ inputs.key }}
+        key:  ${{ inputs.key || env.PUB_CACHE/.pub-cache }}
         fail-on-cache-miss: ${{ inputs.fail-on-cache-miss }}
         enableCrossOsArchive: ${{ inputs.enableCrossOsArchive }}
         lookup-only: ${{ inputs.lookup-only }}

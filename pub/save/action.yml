@@ -7,7 +7,7 @@ inputs:
     default: flutter-pub-cache-${{ hashFiles('**/pubspec.lock', '**/*.dart') }}
   pub-cache-path:
     description: 'The path to the pub-cache directory'
-    default: ${{ env.PUB_CACHE }}/.pub-cache
+    default: ''
     required: false
   enableCrossOsArchive:
     description: 'An optional boolean when enabled, allows windows runners to restore caches that were saved on other platforms'
@@ -25,5 +25,5 @@ runs:
           **/.flutter-plugin-dependencies
           **/.dart_tool/package_config.json
           **/.dart_tool/flutter_gen/pubspec.yaml
-        key: ${{ inputs.key }}
+        key: ${{ inputs.key || env.PUB_CACHE/.pub-cache }}
         enableCrossOsArchive: ${{ inputs.enableCrossOsArchive }}
