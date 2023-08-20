@@ -18,7 +18,6 @@ runs:
   steps:
     - uses: actions/cache/save@v3
       with:
-        path: |
-          ${{ inputs.pub-cache-path || env.PUB_CACHE }}
+        path: ${{ inputs.pub-cache-path || env.PUB_CACHE }}
         key: ${{ inputs.key }}
         enableCrossOsArchive: ${{ inputs.enableCrossOsArchive }}
