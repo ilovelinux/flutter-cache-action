@@ -31,6 +31,8 @@ runs:
     - run: |
         echo "Restore package dependencies from cache"
         echo ${{ inputs.pub-cache-path || format('{0}/.pub-cache', env.PUB_CACHE) }}
+      shell: bash
+
     - uses: actions/cache/restore@v3
       id: pub-cache
       with:
