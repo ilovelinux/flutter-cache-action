@@ -28,11 +28,14 @@ outputs:
 runs:
   using: "composite"
   steps:
+    - run: |
+        echo "Restore package dependencies from cache"
+        echo ${{ inputs.pub-cache-path || format('{0}/.pub-cache', env.PUB_CACHE) }}
     - uses: actions/cache/restore@v3
       id: pub-cache
       with:
         path: |
-          ${{ inputs.pub-cache-path }} ||  ${{ env.PUB_CACHE/.pub-cache }}
+          ${{ inputs.pub-cache-path || format('{0}/.pub-cache', env.PUB_CACHE) }}
           **/.packages
           **/.flutter-plugins
           **/.flutter-plugin-dependencies
