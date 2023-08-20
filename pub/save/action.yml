@@ -19,11 +19,11 @@ runs:
     - uses: actions/cache/save@v3
       with:
         path: |
-          ${{ inputs.pub-cache-path }}
+          ${{ inputs.pub-cache-path }} ||  ${{ env.PUB_CACHE/.pub-cache }}
           **/.packages
           **/.flutter-plugins
           **/.flutter-plugin-dependencies
           **/.dart_tool/package_config.json
           **/.dart_tool/flutter_gen/pubspec.yaml
-        key: ${{ inputs.key || env.PUB_CACHE/.pub-cache }}
+        key: ${{ inputs.key }}
         enableCrossOsArchive: ${{ inputs.enableCrossOsArchive }}
