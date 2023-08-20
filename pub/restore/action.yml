@@ -1,6 +1,14 @@
 name: 'Restore package dependencies from cache'
 description: 'Restore package dependencies from cache'
 inputs:
+  key:
+    description: 'An exact string match for the key. The key is used to create a unique identifier for the cache entry.'
+    required: false
+    default: flutter-pub-cache-${{ hashFiles('**/pubspec.lock') }}
+  pub-cache-path:
+    description: 'The path to the pub-cache directory'
+    default: ${{ env.PUB_CACHE }}/.pub-cache
+    required: false
   fail-on-cache-miss:
     description: 'Fail the workflow if cache entry is not found'
     default: 'false'
@@ -24,13 +32,13 @@ runs:
       id: pub-cache
       with:
         path: |
-          ${{ env.FLUTTER_HOME }}/.pub-cache
+          ${{ inputs.pub-cache-path }}
           **/.packages
           **/.flutter-plugins
           **/.flutter-plugin-dependencies
           **/.dart_tool/package_config.json
           **/.dart_tool/flutter_gen/pubspec.yaml
-        key: build-pubspec-${{ hashFiles('**/pubspec.lock') }}
+        key:  ${{ inputs.key }}
         fail-on-cache-miss: ${{ inputs.fail-on-cache-miss }}
         enableCrossOsArchive: ${{ inputs.enableCrossOsArchive }}
         lookup-only: ${{ inputs.lookup-only }}

@@ -4,7 +4,7 @@ inputs:
   key:
     description: 'An exact string match for the key. The key is used to create a unique identifier for the cache entry.'
     required: false
-    default: build-runner-${{ hashFiles('**/pubspec.lock', '**/*.dart') }}
+    default: flutter-buildrunner-cache-${{ hashFiles('**/pubspec.lock', '**/*.dart') }}
   fail-on-cache-miss:
     description: 'Fail the workflow if cache entry is not found'
     default: 'false'

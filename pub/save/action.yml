@@ -1,6 +1,14 @@
 name: 'Flutter Package Caching Action'
 description: 'Cache package dependencies'
 inputs:
+  key:
+    description: 'An exact string match for the key. The key is used to create a unique identifier for the cache entry.'
+    required: false
+    default: flutter-pub-cache-${{ hashFiles('**/pubspec.lock', '**/*.dart') }}
+  pub-cache-path:
+    description: 'The path to the pub-cache directory'
+    default: ${{ env.PUB_CACHE }}/.pub-cache
+    required: false
   enableCrossOsArchive:
     description: 'An optional boolean when enabled, allows windows runners to restore caches that were saved on other platforms'
     default: 'false'
@@ -11,11 +19,11 @@ runs:
     - uses: actions/cache/save@v3
       with:
         path: |
-          ${{ env.FLUTTER_HOME }}/.pub-cache
+          ${{ inputs.pub-cache-path }}
           **/.packages
           **/.flutter-plugins
           **/.flutter-plugin-dependencies
           **/.dart_tool/package_config.json
           **/.dart_tool/flutter_gen/pubspec.yaml
-        key: build-pubspec-${{ hashFiles('**/pubspec.lock') }}
+        key: ${{ inputs.key }}
         enableCrossOsArchive: ${{ inputs.enableCrossOsArchive }}
