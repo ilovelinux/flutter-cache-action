@@ -20,15 +20,15 @@ inputs:
 outputs:
   cache-key:
     description: "The cache key that was used for restoring the cache."
-    value: ${{ steps.fetch-generated-code.outputs.cache-primary-key || inputs.key }}
+    value: ${{ steps.build-cache.outputs.cache-primary-key || inputs.key }}
   cache-hit:
     description: "A boolean value to indicate an exact match was found for the key."
-    value: ${{ steps.fetch-generated-code.outputs.cache-hit }}
+    value: ${{ steps.build-cache.outputs.cache-hit }}
 runs:
   using: "composite"
   steps:
     - uses: actions/cache/restore@v3
-      id: fetch-generated-code
+      id: build-cache
       with:
         path: |
           **/.dart_tool
