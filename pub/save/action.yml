@@ -6,7 +6,7 @@ inputs:
     required: false
     default: flutter-pub-cache-${{ hashFiles('**/pubspec.lock') }}
   pub-cache-path:
-    description: 'The path to the pub-cache directory'
+    description: 'The path to the pub-cache directory (default: env.PUB_CACHE))'
     default: ''
     required: false
   enableCrossOsArchive:

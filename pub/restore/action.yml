@@ -6,8 +6,8 @@ inputs:
     required: false
     default: flutter-pub-cache-${{ hashFiles('**/pubspec.lock') }}
   pub-cache-path:
-    description: 'The path to the pub-cache directory (default: $PUB_CACHE/.pub-cache))'
-    default: '/foo/bar'
+    description: 'The path to the pub-cache directory (default: env.PUB_CACHE))'
+    default: ''
     required: false
   fail-on-cache-miss:
     description: 'Fail the workflow if cache entry is not found'
@@ -28,11 +28,6 @@ outputs:
 runs:
   using: "composite"
   steps:
-    - run: |
-        echo "Restore package dependencies from cache"
-        echo ${{ inputs.pub-cache-path || format('{0}/.pub-cache', env.PUB_CACHE) }}
-      shell: bash
-
     - uses: actions/cache/restore@v3
       id: pub-cache
       with:
