@@ -44,15 +44,12 @@ runs:
         enableCrossOsArchive: ${{ inputs.enableCrossOsArchive }}
         lookup-only: ${{ inputs.lookup-only }}
 
-    - if: ${{ steps.restore.outputs.cache-hit == 'true' }}
-      run: echo "Cache hit, skipping pub get and cache update"
+    - name: Run pub get
+      run: flutter pub get ${{ inputs.pub-flags }}
       shell: bash
 
-    - run: flutter pub get ${{ inputs.pub-flags }}
-      shell: bash
-
-    - if: ${{ steps.restore.outputs.cache-hit != 'true' }}
-      uses: ilovelinux/flutter-cache-action/pub/save@v1
+    - uses: ilovelinux/flutter-cache-action/pub/save@v1
+      if: ${{ steps.restore.outputs.cache-hit != 'true' }}
       with:
         key: ${{ inputs.key }}
         pub-cache-path: ${{ inputs.pub-cache-path }}

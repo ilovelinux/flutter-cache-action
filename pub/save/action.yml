@@ -16,7 +16,8 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - run: cp -r "${{ inputs.pub-cache-path || env.PUB_CACHE }}" .pub-cache
+    - name: Copy pub-cache into workspace
+      run: cp -r "${{ inputs.pub-cache-path || env.PUB_CACHE }}" .pub-cache
       shell: bash
 
     - uses: actions/cache/save@v3
@@ -25,5 +26,6 @@ runs:
         key: ${{ inputs.key }}
         enableCrossOsArchive: ${{ inputs.enableCrossOsArchive }}
 
-    - run: rm -rf .pub-cache
+    - name: Clean up
+      run: rm -rf .pub-cache
       shell: bash
