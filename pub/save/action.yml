@@ -19,7 +19,7 @@ runs:
     - uses: actions/cache/save@v3
       with:
         path: |
-          ${{ inputs.pub-cache-path || format('{0}/.pub-cache', env.PUB_CACHE) }}
+          ${{ inputs.pub-cache-path || env.PUB_CACHE }}
           **/.packages
           **/.flutter-plugins
           **/.flutter-plugin-dependencies
