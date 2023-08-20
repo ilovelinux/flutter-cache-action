@@ -39,7 +39,7 @@ runs:
       run: |
         echo ::notice::Code not found in cache. Generating...
         dart run build_runner build ${{ inputs.build-runner-flags }}
-        echo ::notice::Code generated! Saving cache..."
+        echo ::notice::Code generated! Saving cache...
 
     - if: ${{ steps.restore.outputs.cache-hit != 'true' }}
       uses: ilovelinux/flutter-cache-action/build_runner/save@v1
