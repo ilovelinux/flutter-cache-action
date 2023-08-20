@@ -16,8 +16,11 @@ inputs:
 runs:
   using: "composite"
   steps:
+    - run: mv ${{ inputs.pub-cache-path }} .pub-cache
+      shell: bash
+
     - uses: actions/cache/save@v3
       with:
-        path: ${{ inputs.pub-cache-path || env.PUB_CACHE }}
+        path: .pub-cache
         key: ${{ inputs.key }}
         enableCrossOsArchive: ${{ inputs.enableCrossOsArchive }}
