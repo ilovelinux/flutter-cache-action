@@ -41,6 +41,8 @@ runs:
         lookup-only: ${{ inputs.lookup-only }}
 
     - name: Move pub cache to correct location
-      run: mv .pub-cache "${{ inputs.pub-cache-path || env.PUB_CACHE }}"
+      run: |
+        rm -rf "${{ inputs.pub-cache-path || env.PUB_CACHE }}"
+        mv -T .pub-cache "${{ inputs.pub-cache-path || env.PUB_CACHE }}"
       if: ${{ steps.pub-cache.outputs.cache-hit == 'true' && inputs.lookup-only != 'true' }}
       shell: bash
